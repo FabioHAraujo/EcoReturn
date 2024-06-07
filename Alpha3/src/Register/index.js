@@ -16,8 +16,9 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import estilosLogin from "../Login/LoginStyles";
-import { auth } from "../firebase/connection";
+import { auth, database } from "../firebase/connection";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { ref, set } from 'firebase/database';
 
 const Register = ({ route }) => {
   const navigation = useNavigation();
@@ -40,11 +41,22 @@ const Register = ({ route }) => {
 
     if (nome && cep && email && senha) {
       try {
-        await createUserWithEmailAndPassword(auth, email, senha);
-        // Após o cadastro, você pode salvar informações adicionais do usuário no Firestore.
+        const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+        const user = userCredential.user;
+
+        // Salvar informações adicionais do usuário no Realtime Database
+        const userRef = ref(database, 'usuarios/' + user.uid); 
+        await set(userRef, {
+          nome: nome,
+          cep: cep,
+          email: email
+          // adicione mais campos conforme necessário
+        });
+
         alert('Usuário cadastrado com sucesso!');
         navigation.navigate('Login');
       } catch (error) {
+        console.error('Erro ao cadastrar: ', error);
         alert('Erro ao cadastrar. Por favor, tente novamente.');
       }
     } else {
