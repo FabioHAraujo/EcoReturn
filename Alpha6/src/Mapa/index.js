@@ -40,8 +40,8 @@ const Mapa = () => {
           longitudeDelta: 0.0421,
         });
 
-        // Fetch markers from Firestore
-        const querySnapshot = await getDocs(collection(db, 'markers'));
+        // Fetch markers do firestore
+        const querySnapshot = await getDocs(collection(db, 'empresas'));
         const fetchedMarkers = [];
         querySnapshot.forEach((doc) => {
           fetchedMarkers.push({ id: doc.id, ...doc.data() });
