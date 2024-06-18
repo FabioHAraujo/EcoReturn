@@ -6,7 +6,9 @@ import {
   View, 
   Text, 
   TextInput, 
-  TouchableOpacity 
+  TouchableOpacity,
+  Modal,
+  Pressable
 } from "react-native"; 
 import { useFonts } from "expo-font"; 
 import { LinearGradient } from "expo-linear-gradient"; 
@@ -25,6 +27,7 @@ const PasswordScreen = () => {
     "Poppins-Black": require("../../assets/fonts/Poppins-Black.ttf"), 
   }); 
   const [password, setPassword] = useState("");
+  const [modalVisible, setModalVisible] = useState(false); // Estado para controlar a visibilidade do modal de erro
 
   const handlePasswordSubmit = () => { 
     if (password.trim() !== "") { 
@@ -37,12 +40,16 @@ const PasswordScreen = () => {
           navigation.navigate('MainTab'); // Ajuste para o nome da tela principal
         })
         .catch((error) => {
-          alert("Erro ao fazer login. Verifique suas credenciais.");
           console.error("Error logging in: ", error);
+          setModalVisible(true); // Exibir modal de erro
         });
     } else { 
       alert('Por favor, preencha sua senha.'); 
     } 
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   if (!fontsLoaded) { 
@@ -115,8 +122,56 @@ const PasswordScreen = () => {
           </TouchableOpacity> 
         </View> 
       </ImageBackground> 
+      {/* Modal de erro */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Seus dados não conferem, por favor, tente novamente.</Text>
+            <Pressable style={styles.modalButton} onPress={closeModal}>
+              <Text style={styles.modalButtonText}>OK</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View> 
   ); 
 }; 
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 16,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  modalButton: {
+    backgroundColor: '#3E70A1',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  modalButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+});
 
 export default PasswordScreen;
