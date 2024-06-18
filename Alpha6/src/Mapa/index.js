@@ -12,7 +12,8 @@ const Mapa = () => {
   const [initialRegion, setInitialRegion] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
-  const markerRefs = useRef({}); // Usar useRef para armazenar referências dos markers
+  const markerRefs = useRef({});
+  const [visibleCalloutId, setVisibleCalloutId] = useState(null);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -40,7 +41,6 @@ const Mapa = () => {
           longitudeDelta: 0.0421,
         });
 
-        // Fetch markers do firestore
         const querySnapshot = await getDocs(collection(db, 'empresas'));
         const fetchedMarkers = [];
         querySnapshot.forEach((doc) => {
@@ -52,15 +52,6 @@ const Mapa = () => {
       }
     })();
   }, []);
-
-  useEffect(() => {
-    // Mostrar callout para cada marcador após markers serem atualizados
-    markers.forEach(marker => {
-      if (markerRefs.current[marker.id]) {
-        markerRefs.current[marker.id].showCallout();
-      }
-    });
-  }, [markers]);
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const toRad = (value) => value * Math.PI / 180;
@@ -75,7 +66,12 @@ const Mapa = () => {
   };
 
   const handleMarkerPress = (marker) => {
-    setSelectedMarker(marker);
+    if (visibleCalloutId === marker.id) {
+      setSelectedMarker(marker);
+      setVisibleCalloutId(null);
+    } else {
+      setVisibleCalloutId(marker.id);
+    }
   };
 
   const handleCloseModal = () => {
@@ -84,9 +80,9 @@ const Mapa = () => {
 
   const handleRoute = () => {
     if (selectedMarker) {
-      openMap({ 
-        end: `${selectedMarker.latitude},${selectedMarker.longitude}`, 
-        travelType: 'drive' 
+      openMap({
+        end: `${selectedMarker.latitude},${selectedMarker.longitude}`,
+        travelType: 'drive'
       });
     }
   };
@@ -113,7 +109,7 @@ const Mapa = () => {
               key={marker.id}
               coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
               onPress={() => handleMarkerPress(marker)}
-              ref={(ref) => markerRefs.current[marker.id] = ref} // Atribuir referência
+              ref={(ref) => markerRefs.current[marker.id] = ref}
             >
               <View style={styles.marker}>
                 <Image source={{ uri: marker.companyLogo }} style={styles.markerImage} />
@@ -121,7 +117,7 @@ const Mapa = () => {
               </View>
               <Callout>
                 <View style={styles.callout}>
-                  <Text>{marker.companyName}</Text>
+                  <Text style={styles.calloutTitle}>{marker.companyName}</Text>
                   <Text>{`Distância: ${calculateDistance(initialRegion.latitude, initialRegion.longitude, marker.latitude, marker.longitude).toFixed(2)} km`}</Text>
                 </View>
               </Callout>
@@ -163,10 +159,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 12,
     fontWeight: 'bold',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fundo branco semitransparente para destaque
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    borderRadius: 4,
   },
   callout: {
     width: 150,
     padding: 5,
+  },
+  calloutTitle: {
+    fontWeight: 'bold',
+    marginBottom: 5,
   },
   modalContent: {
     backgroundColor: 'white',
