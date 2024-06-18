@@ -1,48 +1,49 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFF',
   },
   background: {
     flex: 1,
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
   gradient: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    height: "70%", // Reduzi um pouco a altura do gradiente inferior
+    height: '70%',
   },
   gradientTop: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     top: 0,
-    height: "30%", // Aumentei um pouco a altura do gradiente superior
+    height: '30%',
   },
   containerPesquisa: {
-    marginTop: 100, // Ajuste para melhor posicionamento
+    marginTop: 100,
     alignItems: 'center',
     justifyContent: 'center',
   },
   input: {
-    height: 50, // Aumentei um pouco a altura
-    borderColor: '#ccc', // Cor de borda mais suave
+    height: 50,
+    borderColor: '#ccc',
     borderWidth: 1,
     paddingLeft: 16,
-    paddingRight: 16, // Adicionei padding à direita
+    paddingRight: 16,
     marginBottom: 16,
     width: '85%',
-    borderRadius: 25, // Bordas mais arredondadas
+    borderRadius: 25,
     backgroundColor: '#fff',
-    shadowColor: "#000", // Cor da sombra
-    shadowOffset: { width: 0, height: 2 }, // Deslocamento da sombra
-    shadowOpacity: 0.3, // Opacidade da sombra
-    shadowRadius: 4, // Raio da sombra
-    elevation: 5, // Elevação para Android (opcional)
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
   dropdown: {
     width: '85%',
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: -10,
     zIndex: 1,
-    shadowColor: "#000", // Sombra para destacar
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
@@ -63,29 +64,53 @@ const styles = StyleSheet.create({
   itemImage: {
     width: 64,
     height: 64,
-    borderRadius: 10, // Bordas mais arredondadas
+    borderRadius: 10,
     marginRight: 16,
   },
   itemTextContainer: {
     flex: 1,
   },
   itemName: {
-    color: '#333', // Cor de texto mais escura
+    color: '#333',
     fontSize: 16,
-    fontWeight: '500', // Peso de fonte um pouco mais leve
+    fontWeight: '500',
   },
   itemDescription: {
-    color: '#777', // Cor de texto mais suave
+    color: '#777',
     fontSize: 14,
   },
   homeText: {
     color: '#fff',
-    fontSize: 28, // Fonte um pouco maior
+    fontSize: 28,
     textAlign: 'center',
     marginTop: 20,
-    textShadowColor: 'rgba(0, 0, 0, 0.5)', // Sombra para destacar
-    textShadowOffset: {width: -1, height: 1},
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10,
+  },
+  // Estilos para o Modal
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo escuro transparente
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
+  },
+  companyLogo: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
+  companyDescription: {
+    textAlign: 'center',
+    marginBottom: 10,
   },
 });
 
