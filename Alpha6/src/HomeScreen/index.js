@@ -258,9 +258,13 @@ const HomeScreen = () => {
                     km
                   </Text>
                 )}
-                <Button title="Traçar Rota" onPress={handleRoute} />
+                <TouchableOpacity onPress={handleRoute} style={styles.buttonRoute}>
+                  <Text style={styles.buttonRouteText}>Traçar Rota</Text>
+                </TouchableOpacity>
                 <Separador />
-                <Button title="Fechar" onPress={handleCloseModal} />
+                <TouchableOpacity onPress={handleCloseModal} style={styles.buttonRoute}>
+                  <Text style={styles.buttonRouteText}>Fechar</Text>
+                </TouchableOpacity>
               </>
             )}
           </View>
