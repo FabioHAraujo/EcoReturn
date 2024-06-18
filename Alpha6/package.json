@@ -27,7 +27,9 @@
     "react-native": "0.74.1",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-fast-image": "^8.6.3",
-    "react-native-maps": "1.14.0",
+    "react-native-maps": "^1.14.0",
+    "react-native-modal": "^13.0.1",
+    "react-native-open-maps": "^0.4.3",
     "react-native-text-input-mask": "^3.2.0"
   },
   "devDependencies": {
