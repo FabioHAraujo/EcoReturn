@@ -12,6 +12,7 @@ import { useFonts } from "expo-font";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
+import Modal from "react-native-modal";
 import estilosLogin from "./LoginStyles";
 import { ref, get } from "firebase/database";
 import { database } from "../firebase/connection";
@@ -22,6 +23,7 @@ const Login = () => {
     "Poppins-Black": require("../../assets/fonts/Poppins-Black.ttf"),
   });
   const [email, setEmail] = useState("");
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const handleEmailSubmit = () => {
     if (email.trim() !== "") {
@@ -53,6 +55,10 @@ const Login = () => {
     } else {
       alert("Por favor, preencha seu e-mail.");
     }
+  };
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
   };
 
   if (!fontsLoaded) {
@@ -132,14 +138,30 @@ const Login = () => {
           </TouchableOpacity>
           {/* Botões de Login Social */}
           <View style={styles.socialButtonsContainer}>
-            <TouchableOpacity style={[styles.socialButton, styles.googleButton]}>
+            <TouchableOpacity
+              style={[styles.socialButton, styles.googleButton]}
+              onPress={toggleModal}
+            >
               <FontAwesome name="google" size={24} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.socialButton, styles.facebookButton]}>
+            <TouchableOpacity
+              style={[styles.socialButton, styles.facebookButton]}
+              onPress={toggleModal}
+            >
               <FontAwesome name="facebook" size={24} color="white" />
             </TouchableOpacity>
           </View>
         </View>
+        <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>
+              Não conta pra ninguém, mas esse botão não funciona 🤫
+            </Text>
+            <TouchableOpacity onPress={toggleModal} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>Fechar</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
       </ImageBackground>
     </View>
   );
@@ -164,6 +186,27 @@ const styles = StyleSheet.create({
   },
   facebookButton: {
     backgroundColor: "#4267B2", // Cor do Facebook
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  closeButton: {
+    backgroundColor: "#501794",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  closeButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
 
