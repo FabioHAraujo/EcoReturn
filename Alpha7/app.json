@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Alpha3",
-    "slug": "Alpha3",
+    "name": "EcoReturn",
+    "slug": "EcoReturn",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +18,13 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ],
+      "package": "com.akaiurami.EcoReturn"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -36,6 +42,11 @@
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "28fd21de-3bcc-4f60-bf5e-f8ff150a9d73"
+      }
+    }
   }
 }
